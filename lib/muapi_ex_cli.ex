@@ -1,3 +1,0 @@
-defmodule MuapiExCli do
-
-end
