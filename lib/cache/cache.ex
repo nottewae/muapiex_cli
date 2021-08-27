@@ -34,7 +34,7 @@ defmodule MuapiExCli.Cache do
           Cache.write(unquote(key), unquote(block), unquote(ttl), unquote(user_id), unquote(options))
           Cache.read(unquote(key), unquote(user_id), unquote(options))
         data->
-          Logger.debug "cache"
+          #Logger.debug "cache"
           data
       end
     end
