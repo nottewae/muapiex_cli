@@ -19,13 +19,13 @@ defmodule MuapiExCli.Client do
     end
   end
   def get_category(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1) do
-    MuapiExCli.Cache.fetch("#{Poison.encode!(request)}_#{Poison.encode!(paginator)}_#{get_resource()}", ttl, nil, [timeout: 200000]) do
+    MuapiExCli.Cache.fetch("#{Poison.encode!(request)}_#{Poison.encode!(paginator)}_#{get_resource()}", ttl) do
       fetch_resource(:catalog, "/resource/catalog", paginator, request, meta)
     end
 
   end
   def get_items(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1) do
-    MuapiExCli.Cache.fetch("#{Poison.encode!(request)}_#{Poison.encode!(paginator)}_#{get_resource()}", ttl, nil, [timeout: 200000]) do
+    MuapiExCli.Cache.fetch("#{Poison.encode!(request)}_#{Poison.encode!(paginator)}_#{get_resource()}", ttl) do
       fetch_resource(:item, "/resource/catalog/item", paginator, request, meta)
     end
   end
