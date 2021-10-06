@@ -12,7 +12,7 @@ defmodule MuapiExCli.Client do
   def insert_item(request, meta \\ "elixir_client", opt\\[]) do
     fetch_resource(:item, "/resource/catalog/item/add", %{}, request, meta, opt)
   end
-  def get_resources(meta \\ "elixir_client", ttl \\ 1,, opt\\[]) do
+  def get_resources(meta \\ "elixir_client", ttl \\ 1, opt\\[]) do
     MuapiExCli.Cache.fetch("get_resource_#{get_resource()}", ttl, opt) do
       data = MuapiExCli.Client.Data.new
       post("/resources", data, meta, opt)
