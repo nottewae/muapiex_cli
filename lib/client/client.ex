@@ -7,26 +7,26 @@ defmodule MuapiExCli.Client do
     post("/auth", data, "elixir_client_auth", nil)
   end
   def insert_category(request, meta \\ "elixir_client") do
-    fetch_resource(:item, "/resource/catalog/add", %{}, request, meta)
+    fetch_resource(:item, "/resource/catalog/add", %{}, request, meta, opt\\[])
   end
-  def insert_item(request, meta \\ "elixir_client") do
-    fetch_resource(:item, "/resource/catalog/item/add", %{}, request, meta)
+  def insert_item(request, meta \\ "elixir_client", opt\\[]) do
+    fetch_resource(:item, "/resource/catalog/item/add", %{}, request, meta, opt)
   end
-  def get_resources(meta \\ "elixir_client", ttl \\ 1) do
-    MuapiExCli.Cache.fetch("get_resource_#{get_resource()}", ttl) do
+  def get_resources(meta \\ "elixir_client", ttl \\ 1,, opt\\[]) do
+    MuapiExCli.Cache.fetch("get_resource_#{get_resource()}", ttl, opt) do
       data = MuapiExCli.Client.Data.new
-      post("/resources", data, meta, nil)
+      post("/resources", data, meta, opt)
     end
   end
-  def get_category(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1) do
+  def get_category(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1, opt\\[]) do
     MuapiExCli.Cache.fetch("#{Poison.encode!(request)}_#{Poison.encode!(paginator)}_#{get_resource()}", ttl) do
-      fetch_resource(:catalog, "/resource/catalog", paginator, request, meta)
+      fetch_resource(:catalog, "/resource/catalog", paginator, request, meta, opt)
     end
 
   end
-  def get_items(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1) do
-    MuapiExCli.Cache.fetch("#{Poison.encode!(request)}_#{Poison.encode!(paginator)}_#{get_resource()}", ttl) do
-      fetch_resource(:item, "/resource/catalog/item", paginator, request, meta)
+  def get_items(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1,, opt\\[]) do
+    MuapiExCli.Cache.fetch("#{Poison.encode!(request)}_#{Poison.encode!(paginator)}_#{get_resource()}", ttl, opt) do
+      fetch_resource(:item, "/resource/catalog/item", paginator, request, meta, opt)
     end
   end
 
@@ -64,14 +64,14 @@ defmodule MuapiExCli.Client do
   defp ensure_started do
     MuapiExCli.API.start
   end
-  defp fetch_resource(key, path, paginator, request, meta) do
+  defp fetch_resource(key, path, paginator, request, meta, opt\\[]) do
     data = MuapiExCli.Client.Data.new
     data = Map.merge(data, %{key=> request})
     paginator = make_paginator(paginator)
     data = Map.merge(data, %{paginator: paginator})
-    post(path, data, meta, get_resource())
+    post(path, data, meta, get_resource(),opt)
   end
-  defp post(uri, data, meta, resource) do
+  defp post(uri, data, meta, resource, opt\\[]) do
     ensure_started()
     data = if is_nil(resource) do
       data
@@ -80,7 +80,7 @@ defmodule MuapiExCli.Client do
     end
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
-    MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/json"}])
+    MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/json"}], opt)
   end
 
 
