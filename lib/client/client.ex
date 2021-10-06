@@ -80,7 +80,7 @@ defmodule MuapiExCli.Client do
     end
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
-    MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/json"}], opt)
+    MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/json"}], Poison.encode!(opt))
   end
 
 
