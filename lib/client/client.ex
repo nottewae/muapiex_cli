@@ -24,7 +24,7 @@ defmodule MuapiExCli.Client do
     end
 
   end
-  def get_items(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1,, opt\\[]) do
+  def get_items(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1, opt\\[]) do
     MuapiExCli.Cache.fetch("#{Poison.encode!(request)}_#{Poison.encode!(paginator)}_#{get_resource()}", ttl, opt) do
       fetch_resource(:item, "/resource/catalog/item", paginator, request, meta, opt)
     end
