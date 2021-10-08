@@ -7,7 +7,7 @@ defmodule MuapiExCli.Client do
   end
   def insert_resource(request, meta \\ "elixir_client", opt\\[]) do
     data = MuapiExCli.Client.Data.new
-    data = Map.merge(data, %{data=> request})
+    data = Map.merge(data, %{data: request})
     post("/resource/add", data, "elixir_client", nil)
   end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
