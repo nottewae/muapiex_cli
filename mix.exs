@@ -5,7 +5,7 @@ defmodule MuapiExCli.MixProject do
   def project do
     [
       app: :muapi_ex_cli,
-      version: "0.1.4",
+      version: "0.1.5",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps()
