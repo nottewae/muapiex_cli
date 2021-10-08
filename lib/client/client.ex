@@ -7,7 +7,9 @@ defmodule MuapiExCli.Client do
     post("/auth", data, "elixir_client_auth", nil)
   end
   def insert_resource(request, meta \\ "elixir_client", opt\\[]) do
-    fetch_resource(:item, "/resource/add", %{}, request, meta, opt)
+    data = MuapiExCli.Client.Data.new
+    data = Map.merge(data, %{key=> request})
+    post("/resource/add", data, "elixir_client", nil)
   end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
     fetch_resource(:item, "/resource/catalog/add", %{}, request, meta, opt)
