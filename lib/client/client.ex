@@ -6,10 +6,19 @@ defmodule MuapiExCli.Client do
     post("/auth", data, "elixir_client_auth", nil)
   end
   def insert_resource(request, meta \\ "elixir_client", opt\\[]) do
-    # fetch_resource(:item, "/resource/add", %{}, request, meta, opt)
+    ensure_started()
     data = MuapiExCli.Client.Data.new
+    {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
+    data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     data = Map.merge(data, %{data: request})
-    post("/resource/add", request, "elixir_client")
+    MuapiExCli.API.post("/resource/add", Poison.encode!(data),[{"Content-Type", "application/json"}], opt)
+
+
+
+    # # fetch_resource(:item, "/resource/add", %{}, request, meta, opt)
+    # data = MuapiExCli.Client.Data.new
+    # data = Map.merge(data, %{data: request})
+    # post("/resource/add", request, "elixir_client")
     # post(uri, data, meta, resource, opt\\[])
   end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
