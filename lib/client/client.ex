@@ -78,17 +78,17 @@ defmodule MuapiExCli.Client do
       :client
     end
   end
-  defp ensure_started do
+  def ensure_started do
     MuapiExCli.API.start
   end
-  defp fetch_resource(key, path, paginator, request, meta, opt\\[]) do
+  def fetch_resource(key, path, paginator, request, meta, opt\\[]) do
     data = MuapiExCli.Client.Data.new
     data = Map.merge(data, %{key=> request})
     paginator = make_paginator(paginator)
     data = Map.merge(data, %{paginator: paginator})
     post(path, data, meta, get_resource(),opt)
   end
-  defp post(uri, data, meta, resource\\nil, opt\\[]) do
+  def post(uri, data, meta, resource\\nil, opt\\[]) do
     ensure_started()
     data = if is_nil(resource) do
       data
