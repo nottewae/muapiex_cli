@@ -102,6 +102,7 @@ defmodule MuapiExCli.Client do
     # IO.inspect data
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
     data = Poison.decode!(data)
+    data = Poison.encode!(data)
     IO.inspect data
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     data |> IO.inspect
