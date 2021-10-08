@@ -6,6 +6,9 @@ defmodule MuapiExCli.Client do
     data = MuapiExCli.Client.Data.new
     post("/auth", data, "elixir_client_auth", nil)
   end
+  def insert_resource(request, meta \\ "elixir_client", opt\\[]) do
+    fetch_resource(:item, "/resource/add", %{}, request, meta, opt)
+  end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
     fetch_resource(:item, "/resource/catalog/add", %{}, request, meta, opt)
   end
@@ -15,7 +18,7 @@ defmodule MuapiExCli.Client do
   def get_resources(meta \\ "elixir_client", ttl \\ 1, opt\\[]) do
     MuapiExCli.Cache.fetch("get_resource_#{get_resource()}", ttl,opt) do
       data = MuapiExCli.Client.Data.new
-      post("/resources", data, meta,ttl)
+      post("/resources", data, meta,ttl,opt)
     end
   end
   def get_category(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1, opt\\[]) do
