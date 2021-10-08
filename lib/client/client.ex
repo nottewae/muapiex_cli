@@ -105,7 +105,7 @@ defmodule MuapiExCli.Client do
     # IO.inspect data
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     # data |> IO.inspect
-    # IO.inspect Poison.encode!(data)
+    IO.inspect Poison.encode!(data)
     MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/json"}], opt)
   end
 
