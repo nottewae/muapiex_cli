@@ -24,7 +24,7 @@ defmodule MuapiExCli.Client do
   #   # post(uri, data, meta, resource, opt\\[])
   # end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
-    fetch_resource(:item, "/resource/catalog/add", %{}, request, meta, opt)
+    fetch_resource(:catalog, "/resource/catalog/add", %{}, request, meta, opt)
   end
   def insert_item(request, meta \\ "elixir_client", opt\\[]) do
     fetch_resource(:item, "/resource/catalog/item/add", %{}, request, meta, opt)
@@ -78,17 +78,17 @@ defmodule MuapiExCli.Client do
       :client
     end
   end
-  def ensure_started do
+  defp ensure_started do
     MuapiExCli.API.start
   end
-  def fetch_resource(key, path, paginator, request, meta, opt\\[]) do
+  defp fetch_resource(key, path, paginator, request, meta, opt\\[]) do
     data = MuapiExCli.Client.Data.new
     data = Map.merge(data, %{key=> request})
     paginator = make_paginator(paginator)
     data = Map.merge(data, %{paginator: paginator})
     post(path, data, meta, get_resource(),opt)
   end
-  def post(uri, data, meta, resource\\nil, opt\\[]) do
+  defp post(uri, data, meta, resource\\nil, opt\\[]) do
     ensure_started()
     data = if is_nil(resource) do
       data
