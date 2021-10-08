@@ -12,7 +12,7 @@ defmodule MuapiExCli.Client do
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     data = Map.merge(data, request)
     # Poison.encode!(data)
-    MuapiExCli.API.post("/resource/add", Poison.encode!(data),"elixir_client", opt)
+    MuapiExCli.API.post("/resource/add", Poison.encode!(data),[{"Content-Type", "application/json"}], opt)
 
 
 
