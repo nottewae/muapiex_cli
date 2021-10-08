@@ -24,7 +24,6 @@ defmodule MuapiExCli.Client do
   #   # post(uri, data, meta, resource, opt\\[])
   # end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
-    IO.inspect(:catalog)
     fetch_resource(:catalog, "/resource/catalog/add", %{}, request, meta, opt)
   end
   def insert_item(request, meta \\ "elixir_client", opt\\[]) do
@@ -84,9 +83,12 @@ defmodule MuapiExCli.Client do
   end
   defp fetch_resource(key, path, paginator, request, meta, opt\\[]) do
     data = MuapiExCli.Client.Data.new
+    IO.inspect data
     data = Map.merge(data, %{key=> request})
+    IO.inspect data
     paginator = make_paginator(paginator)
     data = Map.merge(data, %{paginator: paginator})
+    IO.inspect data
     post(path, data, meta, get_resource(),opt)
   end
   defp post(uri, data, meta, resource\\nil, opt\\[]) do
@@ -96,9 +98,12 @@ defmodule MuapiExCli.Client do
     else
       Map.merge(data, %{resource: resource})
     end
+    IO.inspect data
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
+    IO.inspect data
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     data |> IO.inspect
+    IO.inspect Poison.encode!(data)
     MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/json"}], opt)
   end
 
