@@ -92,14 +92,14 @@ defmodule MuapiExCli.Client do
     post(path, data, meta, get_resource(),opt)
   end
   defp post(uri, data, meta, resource, opt\\[]) do
-    IO.inspect data
+    # IO.inspect data
     ensure_started()
     data = if is_nil(resource) do
       data
     else
       Map.merge(data, %{resource: resource})
     end
-    IO.inspect data
+    # IO.inspect data
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
     IO.inspect data
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
