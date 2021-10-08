@@ -10,9 +10,9 @@ defmodule MuapiExCli.Client do
     data = MuapiExCli.Client.Data.new
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
-    data = Map.merge(data, %{data: request})
-    Poison.encode!(data)
-    # MuapiExCli.API.post("/resource/add", Poison.encode!(data),[{"Content-Type", "application/json"}], opt)
+    data = Map.merge(data, request)
+    # Poison.encode!(data)
+    MuapiExCli.API.post("/resource/add", Poison.encode!(data),"elixir_client", opt)
 
 
 
