@@ -20,7 +20,7 @@ defmodule MuapiExCli.Client do
   def get_resources(meta \\ "elixir_client", ttl \\ 1, opt\\[]) do
     MuapiExCli.Cache.fetch("get_resource_#{get_resource()}", ttl,opt) do
       data = MuapiExCli.Client.Data.new
-      post("/resources", data, meta,ttl,opt)
+      post("/resources", data, meta,nil,opt)
     end
   end
   def get_category(request, paginator \\ %{page: 1, per_page: 100}, meta \\ "elixir_client", ttl \\ 1, opt\\[]) do
