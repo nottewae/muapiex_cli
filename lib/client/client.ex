@@ -24,7 +24,7 @@ defmodule MuapiExCli.Client do
   #   # post(uri, data, meta, resource, opt\\[])
   # end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
-    fetch_resource(:item, "/resource/catalog/add", %{}, request, meta, opt)
+    fetch_resource(:catalog, "/resource/catalog/add", %{}, request, meta, opt)
   end
   def insert_item(request, meta \\ "elixir_client", opt\\[]) do
     fetch_resource(:item, "/resource/catalog/item/add", %{}, request, meta, opt)
