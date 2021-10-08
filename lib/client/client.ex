@@ -83,15 +83,16 @@ defmodule MuapiExCli.Client do
   end
   defp fetch_resource(key, path, paginator, request, meta, opt\\[]) do
     data = MuapiExCli.Client.Data.new
-    IO.inspect data
-    data = Map.merge(data, %{key=> request})
-    IO.inspect data
+    # IO.inspect data
+    data = Map.merge(data, %{key => request})
+    # IO.inspect data
     paginator = make_paginator(paginator)
     data = Map.merge(data, %{paginator: paginator})
-    IO.inspect data
+    # IO.inspect data
     post(path, data, meta, get_resource(),opt)
   end
-  defp post(uri, data, meta, resource\\nil, opt\\[]) do
+  defp post(uri, data, meta, resource, opt\\[]) do
+    IO.inspect data
     ensure_started()
     data = if is_nil(resource) do
       data
