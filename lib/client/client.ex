@@ -9,7 +9,7 @@ defmodule MuapiExCli.Client do
     # fetch_resource(:item, "/resource/add", %{}, request, meta, opt)
     # data = MuapiExCli.Client.Data.new
     # data = Map.merge(data, %{data: request})
-    post("/resource/add", request, "elixir_client", nil, opt)
+    post("/resource/add", request, "elixir_client")
     # post(uri, data, meta, resource, opt\\[])
   end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
@@ -77,7 +77,7 @@ defmodule MuapiExCli.Client do
     data = Map.merge(data, %{paginator: paginator})
     post(path, data, meta, get_resource(),opt)
   end
-  defp post(uri, data, meta, resource, opt\\[]) do
+  defp post(uri, data, meta, resource\\nil, opt\\[]) do
     ensure_started()
     data = if is_nil(resource) do
       data
