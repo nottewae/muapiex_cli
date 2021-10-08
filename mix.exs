@@ -1,11 +1,11 @@
 defmodule MuapiExCli.MixProject do
   use Mix.Project
-  #import Config
+  # import Config
 
   def project do
     [
       app: :muapi_ex_cli,
-      version: "0.1.0",
+      version: "0.1.4",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -17,8 +17,8 @@ defmodule MuapiExCli.MixProject do
 
     [
       extra_applications: [:logger, :httpoison],
-      mod: {MuapiExCli.Application, []},
-      #env:config_env()
+      mod: {MuapiExCli.Application, []}
+      # env: config_env()
 
     ]
   end

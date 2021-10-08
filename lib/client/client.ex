@@ -2,7 +2,6 @@ defmodule MuapiExCli.Client do
   require Logger
   require MuapiExCli.Cache
   def auth() do
-
     data = MuapiExCli.Client.Data.new
     post("/auth", data, "elixir_client_auth", nil)
   end
