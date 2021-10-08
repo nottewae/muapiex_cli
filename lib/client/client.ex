@@ -7,8 +7,8 @@ defmodule MuapiExCli.Client do
   end
   def insert_resource(request, meta \\ "elixir_client", opt\\[]) do
     # fetch_resource(:item, "/resource/add", %{}, request, meta, opt)
-    # data = MuapiExCli.Client.Data.new
-    # data = Map.merge(data, %{data: request})
+    data = MuapiExCli.Client.Data.new
+    data = Map.merge(data, %{data: request})
     post("/resource/add", request, "elixir_client")
     # post(uri, data, meta, resource, opt\\[])
   end
