@@ -109,8 +109,8 @@ defmodule MuapiExCli.Client do
     data = MuapiExCli.Helpers.Map.keys_to_atom(data)
     data |> IO.inspect
     # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
-    MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
-    # MuapiExCli.API.post(uri,  Poison.encode!(data),[{"Content-Type", "application/json; charset=utf-8"}], opt)
+    # MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
+    MuapiExCli.API.post(uri,  Poison.encode!(data),[{"Content-Type", "application/json; charset=utf-8"}], opt)
     # MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/x-www-form-urlencoded"}], opt)
   end
 
