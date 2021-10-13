@@ -86,8 +86,8 @@ defmodule MuapiExCli.Client do
     # IO.inspect data
     data = Map.merge(data, %{key => request})
     # IO.inspect data
-    paginator = make_paginator(paginator)
-    data = Map.merge(data, %{paginator: paginator})
+    # paginator = make_paginator(paginator)
+    # data = Map.merge(data, %{paginator: paginator})
     # IO.inspect data
     post(path, data, meta, get_resource(),opt)
   end
