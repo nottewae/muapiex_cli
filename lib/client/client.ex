@@ -128,7 +128,7 @@ defmodule MuapiExCli.Client do
     # data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     # data |> IO.inspect
     # IO.inspect Poison.encode!(data)
-    data = MuapiExCli.Helpers.Map.keys_to_atom(data)
+    # data = MuapiExCli.Helpers.Map.keys_to_atom(data)
     data = Poison.encode!(data)
     # data |> IO.inspect
     headers = [public_key: config()[:public_key], sign: sign, "Content-Type": "application/x-www-form-urlencoded"]
