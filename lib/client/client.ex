@@ -127,13 +127,13 @@ defmodule MuapiExCli.Client do
     {sign, _ } = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
     IO.inspect data
     # data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
-    # data |> IO.inspect
+    data |> IO.inspect
     # IO.inspect Poison.encode!(data)
     # data = MuapiExCli.Helpers.Map.keys_to_atom(data)
     data = Poison.encode!(data)
-    # data |> IO.inspect
-    headers = [public_key: config()[:public_key], sign: sign, "Content-Type": "application/x-www-form-urlencoded"]
-
+    data |> IO.inspect
+    headers = [{"Content-Type", "application/x-www-form-urlencoded"},{"public_key", config()[:public_key]}, {"sign", sign}]
+    headers|> IO.inspect
     # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
     MuapiExCli.API.post(uri,  {:form, data},headers, opt)
     # MuapiExCli.API.post(uri, data, headers, opt)
