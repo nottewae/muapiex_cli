@@ -91,7 +91,7 @@ defmodule MuapiExCli.Client do
     # IO.inspect data
     post(path, data, meta, get_resource(),opt)
   end
-  defp post(uri, data, meta, resource, opt\\[]) do
+  defp post(uri, data, meta, resource, opt\\[], params\\%{}) do
     # IO.inspect data
     ensure_started()
     data = if is_nil(resource) do
@@ -107,11 +107,11 @@ defmodule MuapiExCli.Client do
     # data |> IO.inspect
     # IO.inspect Poison.encode!(data)
     data = MuapiExCli.Helpers.Map.keys_to_atom(data)
-    data = Poison.encode!(data)
-    data |> IO.inspect
+    # data = Poison.encode!(data)
+    # data |> IO.inspect
     # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
     # MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
-    MuapiExCli.API.post(uri,  data,[{"Content-Type", "application/json; charset=utf-8"}], opt)
+    MuapiExCli.API.post(uri,  data, [{"Content-Type", "application/json; charset=utf-8"}], opt)
     # MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/x-www-form-urlencoded"}], opt)
   end
 
