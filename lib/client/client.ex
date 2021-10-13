@@ -91,7 +91,7 @@ defmodule MuapiExCli.Client do
     # IO.inspect data
     post(path, data, meta, get_resource(),opt)
   end
-  defp post(uri, data, meta, resource, opt\\[], params\\%{}) do
+  defp post(uri, data, meta, resource, opt\\[]) do
     # IO.inspect data
     ensure_started()
     data = if is_nil(resource) do
@@ -101,7 +101,7 @@ defmodule MuapiExCli.Client do
     end
     # IO.inspect data
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
-    data = Poison.decode!(data)
+    # data = Poison.decode!(data)
     # IO.inspect data
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     # data |> IO.inspect
