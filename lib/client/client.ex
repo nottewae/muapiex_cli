@@ -92,30 +92,7 @@ defmodule MuapiExCli.Client do
     # IO.inspect data
     post(path, data, meta, get_resource(),opt)
   end
-  # defp post(uri, data, meta, resource, opt\\[]) do
-  #   # IO.inspect data
-  #   ensure_started()
-  #   data = if is_nil(resource) do
-  #     data
-  #   else
-  #     Map.merge(data, %{resource: resource})
-  #   end
-  #   # IO.inspect data
-  #   {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
-  #   data = Poison.decode!(data)
-  #   IO.inspect data
-  #   data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
-  #   # data |> IO.inspect
-  #   # IO.inspect Poison.encode!(data)
-  #   data = MuapiExCli.Helpers.Map.keys_to_atom(data)
-  #   data = Poison.encode!(data)
-  #   data |> IO.inspect
-  #   # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
-  #   # MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
-  #   MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json; charset=utf-8"}], opt)
-  #   # MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/x-www-form-urlencoded"}], opt)
-  # end
-    defp post(uri, data, meta, resource, opt\\[]) do
+  defp post(uri, data, meta, resource, opt\\[]) do
     # IO.inspect data
     ensure_started()
     data = if is_nil(resource) do
@@ -124,23 +101,28 @@ defmodule MuapiExCli.Client do
       Map.merge(data, %{resource: resource})
     end
     # IO.inspect data
-    {sign, _ } = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
+    {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
+    data = Poison.decode!(data)
     IO.inspect data
-    # data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
-    data |> IO.inspect
+    data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
+    # data |> IO.inspect
     # IO.inspect Poison.encode!(data)
-    # data = MuapiExCli.Helpers.Map.keys_to_atom(data)
+    data = MuapiExCli.Helpers.Map.keys_to_atom(data)
     data = Poison.encode!(data)
+    # opt in request2API:  {
+    #   public_key: '',
+    #   meta: '',
+    #   data: '{"resource":"walmart_v2","catalog":{"name":"catalog","url":"https://www.walmart.com","region":""},"time":1634160894}',
+    #   sign: ''
+    # }
+
+
     data |> IO.inspect
-    headers = [{"Content-Type", "application/json"},{"public_key", config()[:public_key]}, {"sign", sign}]
-    headers|> IO.inspect
     # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
-    MuapiExCli.API.post(uri,  {:form, data},headers, opt)
-    # MuapiExCli.API.post(uri, data, headers, opt)
+    # MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
+    MuapiExCli.API.post(uri, data, [])
     # MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/x-www-form-urlencoded"}], opt)
   end
-
-
   def config do
     [
       public_key: Application.fetch_env!(:muapi_ex_cli, :public_key),
