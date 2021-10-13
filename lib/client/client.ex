@@ -133,9 +133,10 @@ defmodule MuapiExCli.Client do
     data = Poison.encode!(data)
     # data |> IO.inspect
     headers = [public_key: config()[:public_key], sign: sign, "Content-Type": "application/x-www-form-urlencoded"]
+
     # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
-    # MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
-    MuapiExCli.API.post(uri, data, headers, opt)
+    MuapiExCli.API.post(uri,  {:form, data},headers, opt)
+    # MuapiExCli.API.post(uri, data, headers, opt)
     # MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/x-www-form-urlencoded"}], opt)
   end
 
