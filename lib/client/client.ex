@@ -132,7 +132,7 @@ defmodule MuapiExCli.Client do
     # data = MuapiExCli.Helpers.Map.keys_to_atom(data)
     data = Poison.encode!(data)
     data |> IO.inspect
-    headers = [{"Content-Type", "application/x-www-form-urlencoded"},{"public_key", config()[:public_key]}, {"sign", sign}]
+    headers = [{"Content-Type", "application/json"},{"public_key", config()[:public_key]}, {"sign", sign}]
     headers|> IO.inspect
     # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
     MuapiExCli.API.post(uri,  {:form, data},headers, opt)
