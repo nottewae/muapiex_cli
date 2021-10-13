@@ -123,7 +123,7 @@ defmodule MuapiExCli.Client do
       Map.merge(data, %{resource: resource})
     end
     # IO.inspect data
-    {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
+    {sign, _ } = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
     IO.inspect data
     # data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     # data |> IO.inspect
