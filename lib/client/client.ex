@@ -102,8 +102,8 @@ defmodule MuapiExCli.Client do
     end
     # IO.inspect data
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
-    data = Poison.decode!(data)
-    IO.inspect data
+    # data = Poison.decode!(data)
+    # IO.inspect data
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     # data |> IO.inspect
     # IO.inspect Poison.encode!(data)
@@ -120,8 +120,8 @@ defmodule MuapiExCli.Client do
     data |> IO.inspect
     # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
     # MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
-    # MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json"}])
-    MuapiExCli.API.post(uri, data, [{"Content-Type", "application/x-www-form-urlencoded"}])
+    MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json"}])
+    # MuapiExCli.API.post(uri, data, [{"Content-Type", "application/x-www-form-urlencoded"}])
     # MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/x-www-form-urlencoded"}], opt)
   end
   def config do
