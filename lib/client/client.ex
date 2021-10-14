@@ -5,24 +5,6 @@ defmodule MuapiExCli.Client do
     data = MuapiExCli.Client.Data.new
     post("/auth", data, "elixir_client_auth", nil)
   end
-  # def insert_resource(request, meta \\ "elixir_client", opt\\[]) do
-  #   # # fetch_resource(:item, "/resource/add", %{}, request, meta, opt)
-  #   # # ensure_started()
-  #   # data = MuapiExCli.Client.Data.new
-  #   # {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
-  #   # data = %{sign: sign, public_key: config()[:public_key], data: request, meta: meta}
-  #   # # data = Map.merge(data, request)
-  #   # # # Poison.encode!(data)
-  #   # MuapiExCli.API.post("/resource/add", Poison.encode!(data),[{"Content-Type", "application/json"}], opt)
-
-
-
-  #   # # fetch_resource(:item, "/resource/add", %{}, request, meta, opt)
-  #   # data = MuapiExCli.Client.Data.new
-  #   # data = Map.merge(data, %{data: request})
-  #   # post("/resource/add", request, "elixir_client")
-  #   # post(uri, data, meta, resource, opt\\[])
-  # end
   def insert_category(request, meta \\ "elixir_client", opt\\[]) do
     auth()
     fetch_resource(:catalog, "/resource/catalog/add", %{}, request, meta, opt)
@@ -84,45 +66,24 @@ defmodule MuapiExCli.Client do
   end
   defp fetch_resource(key, path, paginator, request, meta, opt\\[]) do
     data = MuapiExCli.Client.Data.new
-    # IO.inspect data
     data = Map.merge(data, %{key => request})
-    # IO.inspect data
     paginator = make_paginator(paginator)
     data = Map.merge(data, %{paginator: paginator})
-    # IO.inspect data
     post(path, data, meta, get_resource(),opt)
   end
   defp post(uri, data, meta, resource, opt\\[]) do
-    # IO.inspect data
     ensure_started()
     data = if is_nil(resource) do
       data
     else
       Map.merge(data, %{resource: resource})
     end
-    # IO.inspect data
     {sign, data} = MuapiExCli.Client.Data.make_sign(data, config()[:private_key])
-    # data = Poison.decode!(data)
-    # IO.inspect data
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
-    # data |> IO.inspect
-    # IO.inspect Poison.encode!(data)
     data = MuapiExCli.Helpers.Map.keys_to_atom(data)
     data = Poison.encode!(data)
-    # opt in request2API:  {
-    #   public_key: '',
-    #   meta: '',
-    #   data: '{"resource":"walmart_v2","catalog":{"name":"catalog","url":"https://www.walmart.com","region":""},"time":1634160894}',
-    #   sign: ''
-    # }
-
-
-    data |> IO.inspect
-    # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
-    # MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
+    # MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json; charset=utf-8"}],opt)
     MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json"}],opt)
-    # MuapiExCli.API.post(uri, data, [{"Content-Type", "application/x-www-form-urlencoded"}])
-    # MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/x-www-form-urlencoded"}], opt)
   end
   def config do
     [
