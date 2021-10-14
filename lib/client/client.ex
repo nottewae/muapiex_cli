@@ -120,7 +120,7 @@ defmodule MuapiExCli.Client do
     data |> IO.inspect
     # MuapiExCli.API.post(uri, Poison.encode!(data),[], opt)
     # MuapiExCli.API.post(uri,  {:form, data},[{"Content-Type", "application/json; charset=utf-8"}], opt)
-    MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json; charset=utf-8"}])
+    MuapiExCli.API.post(uri, data, [{"Content-Type", "text/json"}])
     # MuapiExCli.API.post(uri, Poison.encode!(data),[{"Content-Type", "application/x-www-form-urlencoded"}], opt)
   end
   def config do
