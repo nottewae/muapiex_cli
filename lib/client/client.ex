@@ -57,7 +57,7 @@ defmodule MuapiExCli.Client do
     try do
       :ets.new(:client, [:set, :protected, :named_table])
     rescue e->
-      Logger.warn("table already exists")
+      # Logger.warn("table already exists")
       :client
     end
   end
