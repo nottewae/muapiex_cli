@@ -83,11 +83,8 @@ defmodule MuapiExCli.Client do
     data = %{sign: sign, public_key: config()[:public_key], data: data, meta: meta}
     data = MuapiExCli.Helpers.Map.keys_to_atom(data)
     data = Poison.encode!(data)
-    IO.inspect data
     # MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json; charset=utf-8"}],opt)
-    a = MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json"}],opt)
-    IO.inspect a
-    a
+    MuapiExCli.API.post(uri, data, [{"Content-Type", "application/json"}],opt)
   end
   def config do
     [
